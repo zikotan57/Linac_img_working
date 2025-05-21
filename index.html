@@ -37,30 +37,33 @@
 
     <!-- Checklist Form -->
     <div id="technicianInterface" class="hidden">
-      <div class="bg-white p-6 rounded shadow mb-6">
-        <h2 class="text-xl font-bold mb-4">Checklist d'installation</h2>
-        <form id="checklistForm" class="space-y-4">
-          <div>
-            <label class="flex gap-2 items-start">
-              <input type="checkbox" name="task" value="Nivellement de la salle">
-              Nivellement de la salle
-            </label>
-            <textarea placeholder="Commentaire..." class="w-full border p-2 mt-2 rounded"></textarea>
-            <input type="file" accept="image/*" class="block mt-2">
-          </div>
-          <div>
-            <label class="flex gap-2 items-start">
-              <input type="checkbox" name="task" value="Connexion électrique">
-              Connexion électrique
-            </label>
-            <textarea placeholder="Commentaire..." class="w-full border p-2 mt-2 rounded"></textarea>
-            <input type="file" accept="image/*" class="block mt-2">
-          </div>
-          <button type="button" onclick="saveChecklist()"
-            class="bg-green-600 text-white px-4 py-2 rounded">Enregistrer</button>
-        </form>
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h2 class="text-xl font-bold mb-4">Checklist d'installation</h2>
+    <form id="checklistForm" class="space-y-4">
+      <div>
+        <label class="flex gap-2 items-start">
+          <input type="checkbox" name="task" value="Nivellement de la salle">
+          Nivellement de la salle
+        </label>
+        <textarea placeholder="Commentaire..." class="w-full border p-2 mt-2 rounded"></textarea>
+        <input type="file" accept="image/*" class="block mt-2 image-upload">
+        <img class="uploaded-preview mt-2" style="max-width: 200px;">
       </div>
-    </div>
+
+      <div>
+        <label class="flex gap-2 items-start">
+          <input type="checkbox" name="task" value="Connexion électrique">
+          Connexion électrique
+        </label>
+        <textarea placeholder="Commentaire..." class="w-full border p-2 mt-2 rounded"></textarea>
+        <input type="file" accept="image/*" class="block mt-2 image-upload">
+        <img class="uploaded-preview mt-2" style="max-width: 200px;">
+      </div>
+
+      <button type="button" onclick="saveChecklist()" class="bg-green-600 text-white px-4 py-2 rounded">Enregistrer</button>
+    </form>
+  </div>
+</div>
 
     <!-- Ingénieur Interface -->
     <div id="engineerInterface" class="hidden">
@@ -85,7 +88,8 @@
     <p>&copy; 2025 LINAC Guide - Tous droits réservés.</p>
   </footer>
 
-  <script src="./script.js"></script>
+<script src="./script.js"></script>
+
 </body>
 
 </html>

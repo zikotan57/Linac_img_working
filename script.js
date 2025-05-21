@@ -54,7 +54,6 @@ function saveChecklist() {
   const history = JSON.parse(localStorage.getItem('linac_history') || '[]');
   history.push(data);
   localStorage.setItem('linac_history', JSON.stringify(history));
-
   alert('Checklist sauvegardée');
   loadHistory();
 }
@@ -68,6 +67,8 @@ function loadHistory() {
     const li = document.createElement('li');
     li.textContent = `${h.date} (${h.tasks.length} étapes)`;
     list.appendChild(li);
+    // localStorage.removeItem('linac_history');
+    // loadHistory(); // Refresh the displayed history list after clearing
   });
 }
 
@@ -95,7 +96,7 @@ async function generatePDF() {
 
   for (const item of history) {
     const div = document.createElement('div');
-    div.classList.add('mb-4');
+    div.classList.add('m-4');
 
     let tasksHTML = '';
     for (const t of item.tasks) {
@@ -120,7 +121,8 @@ async function generatePDF() {
 }
 
 
-// Your Cloudinary upload code remains the same
+
+
 
 const CLOUD_NAME = "dq5fztfqd";
 const UPLOAD_PRESET = "justMe";
@@ -144,7 +146,7 @@ document.querySelectorAll(".image-upload").forEach(input => {
     const preview = this.parentElement.querySelector(".uploaded-preview");
     preview.src = data.secure_url;
 
-    // Save URL in hidden input for later use
+    // Optional: save URL in hidden input or elsewhere for later use
     const hiddenInput = document.createElement("input");
     hiddenInput.type = "hidden";
     hiddenInput.name = "uploaded_images[]";
