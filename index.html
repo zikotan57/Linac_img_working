@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINAC Install Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">LINAC Guide</h1>
+    <nav class="space-x-4">
+      <button onclick="navigateTo('dashboard')" class="hover:underline">Dashboard</button>
+      <button onclick="navigateTo('historyList')" class="hover:underline">Historique</button>
+      <button onclick="navigateTo('reportContent')" class="hover:underline">Rapport</button>
+      <button onclick="logout()" class="hover:underline">Déconnexion</button>
+    </nav>
+  </header>
+
+  <!-- Login Page -->
+  <div id="loginPage" class="flex items-center justify-center h-screen">
+    <div class="bg-white p-6 rounded shadow w-96">
+      <h2 class="text-2xl font-bold mb-4 text-blue-700">Connexion</h2>
+      <input id="username" type="text" placeholder="Nom d'utilisateur" class="w-full p-2 border rounded mb-3">
+      <input id="password" type="password" placeholder="Mot de passe" class="w-full p-2 border rounded mb-4">
+      <button onclick="login()" class="bg-blue-600 text-white w-full p-2 rounded">Se connecter</button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="hidden p-6">
+    <h1 class="text-3xl font-bold mb-6">Bienvenue, <span id="userRole"></span></h1>
+
+    <!-- Checklist Form -->
+    <div id="technicianInterface" class="hidden">
+      <div class="bg-white p-6 rounded shadow mb-6">
+        <h2 class="text-xl font-bold mb-4">Checklist d'installation</h2>
+        <form id="checklistForm" class="space-y-4">
+          <div>
+            <label class="flex gap-2 items-start">
+              <input type="checkbox" name="task" value="Nivellement de la salle">
+              Nivellement de la salle
+            </label>
+            <textarea placeholder="Commentaire..." class="w-full border p-2 mt-2 rounded"></textarea>
+            <input type="file" accept="image/*" class="block mt-2">
+          </div>
+          <div>
+            <label class="flex gap-2 items-start">
+              <input type="checkbox" name="task" value="Connexion électrique">
+              Connexion électrique
+            </label>
+            <textarea placeholder="Commentaire..." class="w-full border p-2 mt-2 rounded"></textarea>
+            <input type="file" accept="image/*" class="block mt-2">
+          </div>
+          <button type="button" onclick="saveChecklist()"
+            class="bg-green-600 text-white px-4 py-2 rounded">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Ingénieur Interface -->
+    <div id="engineerInterface" class="hidden">
+      <div class="bg-white p-6 rounded shadow mb-6">
+        <h2 class="text-xl font-bold mb-4">Rapport Technique</h2>
+        <button onclick="generatePDF()" class="bg-blue-600 text-white px-4 py-2 rounded">Générer PDF</button>
+        <div id="reportContent" class="mt-4">
+          <!-- Rapport contenu ici -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Historique -->
+    <div class="bg-white p-6 rounded shadow">
+      <h2 class="text-xl font-bold mb-4">Historique</h2>
+      <ul id="historyList" class="list-disc ml-6 space-y-1"></ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 LINAC Guide - Tous droits réservés.</p>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>
