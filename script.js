@@ -71,34 +71,56 @@ function loadHistory() {
   });
 }
 
-function generatePDF() {
+async function toBase64(url) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error('Error converting image to base64:', error);
+    return null;
+  }
+}
+
+async function generatePDF() {
   const content = document.getElementById('reportContent');
   content.innerHTML = '';
 
   const history = JSON.parse(localStorage.getItem('linac_history') || '[]');
 
-  history.forEach(item => {
+  for (const item of history) {
     const div = document.createElement('div');
     div.classList.add('mb-4');
-    div.innerHTML = `<h3 class='font-bold'>${item.date}</h3>` +
-      item.tasks.map(t => `
+
+    let tasksHTML = '';
+    for (const t of item.tasks) {
+      let imgBase64 = '';
+      if (t.image) {
+        imgBase64 = await toBase64(t.image) || '';
+      }
+
+      tasksHTML += `
         <p>- ${t.step}: ${t.checked ? '✔️' : '❌'}<br>
         Commentaire: ${t.comment || '—'}<br>
-        ${t.image ? `<img src="${t.image}" style="max-width:200px; margin-top:5px;">` : ''}
+        ${imgBase64 ? `<img src="${imgBase64}" style="max-width:200px; margin-top:5px;">` : ''}
         </p>
-      `).join('');
+      `;
+    }
+
+    div.innerHTML = `<h3 class='font-bold'>${item.date}</h3>${tasksHTML}`;
     content.appendChild(div);
-  });
+  }
 
   html2pdf().from(content).save('rapport_linac.pdf');
 }
 
 
-
-
-
-
-
+// Your Cloudinary upload code remains the same
 
 const CLOUD_NAME = "dq5fztfqd";
 const UPLOAD_PRESET = "justMe";
@@ -122,7 +144,7 @@ document.querySelectorAll(".image-upload").forEach(input => {
     const preview = this.parentElement.querySelector(".uploaded-preview");
     preview.src = data.secure_url;
 
-    // Optional: save URL in hidden input or elsewhere for later use
+    // Save URL in hidden input for later use
     const hiddenInput = document.createElement("input");
     hiddenInput.type = "hidden";
     hiddenInput.name = "uploaded_images[]";
